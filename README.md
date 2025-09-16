@@ -46,6 +46,8 @@ $ nest g filter http-exception --no-spec
 npm i @nestjs/mongoose mongoose --save
 npm i --save @nestjs/config
 # npm i @types/mongoose --save-dev
+
+# 文档 https://docs.nestjs.com/techniques/mongodb
 ```
 
 
