@@ -1,7 +1,7 @@
 //  dto 数据传输对象 data transfer object
 
 export class UserDto {
-  readonly _id: string;
+  readonly id: string;
   readonly username: string;
   readonly password: string;
   readonly nickname: string;

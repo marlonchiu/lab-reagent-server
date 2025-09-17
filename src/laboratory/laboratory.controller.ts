@@ -16,7 +16,7 @@ import { LaboratoryDto } from './dto/laboratory.dto';
 
 // @Controller('laboratory')
 @Controller({ path: 'laboratory', version: '1.0' })
-@ApiTags('实验室管理')
+@ApiTags('实验室管理 Laboratory')
 export class LaboratoryController {
   constructor(private readonly laboratoryService: LaboratoryService) {}
 
