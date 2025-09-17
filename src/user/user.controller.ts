@@ -19,13 +19,18 @@ export class UserController {
 
   // 分页查询
   @Get('/page')
-  findAll(
+  async findAll(
     @Query('keyword') keyword: string,
-    @Query('page') page: number,
+    @Query('pageNum') pageNum: number,
     @Query('pageSize') pageSize: number,
   ) {
-    console.log(keyword, page, pageSize);
-    return this.userService.findAll();
+    console.log(keyword, pageNum, pageSize);
+    const list = await this.userService.findAllList({ keyword, pageNum, pageSize });
+    const count = await this.userService.countAll({ keyword });
+    return {
+      records: list,
+      total: count,
+    };
   }
 
   // 创建

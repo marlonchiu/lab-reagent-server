@@ -11,8 +11,31 @@ export class UserService {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async findAll(): Promise<any> {
-    return await this.userModel.find();
+  async findAllList({ keyword = '', pageNum = 1, pageSize = 10 }): Promise<any> {
+    const whereOpt: any = {};
+
+    if (keyword) {
+      const reg = new RegExp(keyword, 'i');
+      whereOpt.nickname = { $regex: reg }; // 模糊搜索 'abc'
+    }
+
+    return await this.userModel
+      .find(whereOpt)
+      .sort({ _id: 1 }) // _id倒序
+      .skip((pageNum - 1) * pageSize) // 跳过
+      .limit(pageSize) // 限制
+      .exec();
+  }
+
+  async countAll({ keyword = '' }) {
+    const whereOpt: any = {};
+
+    if (keyword) {
+      const reg = new RegExp(keyword, 'i');
+      whereOpt.nickname = { $regex: reg }; // 模糊搜索 'abc'
+    }
+
+    return await this.userModel.countDocuments(whereOpt);
   }
   // 创建用户
   async create(userDto: UserDto): Promise<any> {

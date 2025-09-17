@@ -8,7 +8,7 @@ export type LaboratoryDocument = HydratedDocument<Laboratory>;
 })
 export class Laboratory {
   @Prop({ required: true, unique: true })
-  id: string;
+  _id: string;
 
   @Prop({ required: true, unique: true })
   name: string;

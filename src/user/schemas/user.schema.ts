@@ -24,6 +24,18 @@ export class User {
 
   @Prop()
   phone: string;
+
+  @Prop()
+  laboratory_id: string;
+
+  @Prop()
+  role: string;
+
+  @Prop()
+  avatar: string;
+
+  @Prop({ default: true })
+  is_active: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
