@@ -7,4 +7,5 @@ export class UserDto {
   readonly realname: string;
   readonly email: string;
   readonly phone: string;
+  readonly laboratory_id: string;
 }
