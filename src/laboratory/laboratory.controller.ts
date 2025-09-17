@@ -10,14 +10,21 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { LaboratoryService } from './laboratory.service';
 import { LaboratoryDto } from './dto/laboratory.dto';
 
-@Controller('laboratory')
+// @Controller('laboratory')
+@Controller({ path: 'laboratory', version: '1.0' })
+@ApiTags('实验室管理')
 export class LaboratoryController {
   constructor(private readonly laboratoryService: LaboratoryService) {}
 
   // 分页查询
+  @ApiOperation({ summary: '分页查询' })
+  @ApiQuery({ name: 'keyword', type: String, required: false, description: '搜索关键词' })
+  @ApiQuery({ name: 'pageNum', type: Number, required: false, description: '页码' })
+  @ApiQuery({ name: 'pageSize', type: Number, required: false, description: '每页数量' })
   @Get('/page')
   async page(
     @Query('keyword') keyword: string,
@@ -33,6 +40,7 @@ export class LaboratoryController {
   }
 
   // 列表查询
+  @ApiOperation({ summary: '列表查询' })
   @Get('/list')
   async list(@Query('keyword') keyword: string) {
     const list = await this.laboratoryService.findList({ keyword });
@@ -40,6 +48,7 @@ export class LaboratoryController {
   }
 
   // 创建
+  @ApiOperation({ summary: '创建' })
   @Post('/save')
   async save(@Body() dataDto: LaboratoryDto) {
     try {
@@ -50,6 +59,7 @@ export class LaboratoryController {
   }
 
   // 更新
+  @ApiOperation({ summary: '更新' })
   @Put('/update/:id')
   async update(@Param('id') id: string, @Body() dataDto: LaboratoryDto) {
     const data = await this.laboratoryService.updateOne(id, dataDto);
@@ -64,12 +74,14 @@ export class LaboratoryController {
   }
 
   // 查询单条信息一条
+  @ApiOperation({ summary: '查询单条信息' })
   @Get('/getById/:id')
   getById(@Param('id') id: string) {
     return this.laboratoryService.findOne(id);
   }
 
   // 删除
+  @ApiOperation({ summary: '删除' })
   @Delete('/deleteById/:id')
   deleteById(@Param('id') id: string) {
     return this.laboratoryService.deleteOne(id);

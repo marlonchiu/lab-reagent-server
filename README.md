@@ -1,4 +1,5 @@
 # lab-reagent-server
+
 实验室耗材小程序服务端
 
 ## Description
@@ -26,6 +27,7 @@ $ pnpm run start:prod
 ```
 
 ## 生成模块指令
+
 ```bash
 $ nest g module <module-name>
 $ nest g controller <module-name> --no-spec
@@ -42,6 +44,7 @@ $ nest g filter http-exception --no-spec
 ```
 
 ## 安装数据库
+
 ```bash
 npm i @nestjs/mongoose mongoose --save
 npm i --save @nestjs/config
@@ -50,12 +53,21 @@ npm i --save @nestjs/config
 # 文档 https://docs.nestjs.com/techniques/mongodb
 ```
 
-
 ## JWT
+
 ```bash
 
 # 文档 https://docs.nestjs.com/security/authentication
 npm install --save @nestjs/jwt
+```
+
+## SWAGGER
+
+```bash
+
+# 文档 https://docs.nestjs.com/openapi/introduction
+# https://juejin.cn/post/7315260397371441167
+npm install --save @nestjs/swagger
 ```
 
 ## Run tests
