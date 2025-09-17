@@ -1,7 +1,8 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/user/dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from './auth.guard';
 
 @Controller('auth')
 @ApiTags('授权管理 Auth')
@@ -12,5 +13,11 @@ export class AuthController {
   async login(@Body() userInfo: UserDto) {
     const { username, password } = userInfo;
     return this.authService.singIn(username, password);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('/profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
