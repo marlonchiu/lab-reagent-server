@@ -10,10 +10,12 @@ import {
   Patch,
   HttpException,
   HttpStatus,
+  Redirect,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { UserDto } from './dto/user.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('user')
 @ApiTags('用户管理 User')
@@ -43,9 +45,25 @@ export class UserController {
   }
 
   // 创建注册
+  @Public()
   @Post('/register')
   async register(@Body() dataDto: UserDto) {
     return await this.userService.create(dataDto);
+  }
+
+  // 登录账号
+  @Public()
+  @Post('/login')
+  @Redirect('/api/auth/login', 307) // http状态码 POST请求 - 308永久 307临时
+  async login() {
+    return;
+  }
+
+  // 获取信息
+  @Get('/info')
+  @Redirect('/api/auth/profile', 302) // http状态码 GET请求 - 301永久 302临时
+  async info() {
+    return;
   }
 
   // 修改
