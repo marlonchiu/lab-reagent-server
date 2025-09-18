@@ -11,9 +11,10 @@ import {
   HttpStatus,
   Request,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { LaboratoryService } from './laboratory.service';
 import { LaboratoryDto } from './dto/laboratory.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 // @Controller('laboratory')
 @Controller({ path: 'laboratory', version: '1.0' })
@@ -22,6 +23,7 @@ export class LaboratoryController {
   constructor(private readonly laboratoryService: LaboratoryService) {}
 
   // 分页查询
+  @Public()
   @ApiOperation({ summary: '分页查询' })
   @ApiQuery({ name: 'keyword', type: String, required: false, description: '搜索关键词' })
   @ApiQuery({ name: 'pageNum', type: Number, required: false, description: '页码' })
@@ -41,7 +43,9 @@ export class LaboratoryController {
   }
 
   // 列表查询
+  @Public()
   @ApiOperation({ summary: '列表查询' })
+  @ApiQuery({ name: 'keyword', type: String, required: false, description: '搜索关键词' })
   @Get('/list')
   async list(@Query('keyword') keyword: string) {
     const list = await this.laboratoryService.findList({ keyword });
@@ -62,6 +66,7 @@ export class LaboratoryController {
 
   // 更新
   @ApiOperation({ summary: '更新' })
+  @ApiBearerAuth() // 表示当前接口请求头需要添加authorization
   @Put('/update/:id')
   async update(@Param('id') id: string, @Body() dataDto: LaboratoryDto) {
     const data = await this.laboratoryService.updateOne(id, dataDto);

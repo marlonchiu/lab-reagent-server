@@ -17,8 +17,9 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('试剂预约接口文档')
-    .setDescription('描述...')
+    .setDescription('接口文档描述...')
     .setVersion('1.0')
+    .addBearerAuth() // 注意此处：文档添加BearerAuth
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('/api-docs', app, documentFactory);

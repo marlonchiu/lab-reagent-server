@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Laboratory } from './schemas/laboratory.schema';
 import { LaboratoryDto } from './dto/laboratory.dto';
+import { isValidEmpty } from '../utils/valid';
 
 @Injectable()
 export class LaboratoryService {
@@ -30,7 +31,7 @@ export class LaboratoryService {
   async countAll({ keyword = '' }) {
     const whereOpt: any = {};
 
-    if (keyword) {
+    if (!isValidEmpty(keyword)) {
       const reg = new RegExp(keyword, 'i');
       whereOpt.name = { $regex: reg }; // 模糊搜索 'abc'
     }
@@ -41,7 +42,7 @@ export class LaboratoryService {
   async findList({ keyword = '' }) {
     const whereOpt: any = {};
 
-    if (keyword) {
+    if (!isValidEmpty(keyword)) {
       const reg = new RegExp(keyword, 'i');
       whereOpt.name = { $regex: reg }; // 模糊搜索 'abc'
     }
