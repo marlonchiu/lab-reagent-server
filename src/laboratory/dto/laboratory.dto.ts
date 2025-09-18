@@ -8,4 +8,5 @@ export class LaboratoryDto {
   readonly contact_person: string;
   readonly contact_phone: string;
   readonly is_active: boolean;
+  readonly created_by: string;
 }

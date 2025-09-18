@@ -50,8 +50,9 @@ export class LaboratoryService {
   }
 
   // 创建
-  async create(dataDto: LaboratoryDto) {
-    const createdLab = new this.laboratoryModel(dataDto);
+  async create(userId: string, dataDto: LaboratoryDto) {
+    const newData = { ...dataDto, created_by: userId };
+    const createdLab = new this.laboratoryModel(newData);
     return await createdLab.save();
   }
 

@@ -40,6 +40,9 @@ export class Laboratory {
 
   @Prop({ default: true })
   is_active: boolean;
+
+  @Prop()
+  created_by: string;
 }
 
 export const LaboratorySchema = SchemaFactory.createForClass(Laboratory);

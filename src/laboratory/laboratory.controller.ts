@@ -9,6 +9,7 @@ import {
   Put,
   HttpException,
   HttpStatus,
+  Request,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
 import { LaboratoryService } from './laboratory.service';
@@ -50,9 +51,10 @@ export class LaboratoryController {
   // 创建
   @ApiOperation({ summary: '创建' })
   @Post('/save')
-  async save(@Body() dataDto: LaboratoryDto) {
+  async save(@Request() req, @Body() dataDto: LaboratoryDto) {
     try {
-      return await this.laboratoryService.create(dataDto);
+      const { id: userId } = req.user;
+      return await this.laboratoryService.create(userId, dataDto);
     } catch (error) {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
